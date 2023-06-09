@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap');
+
+:root{
+
+
+    /* CORES PRINCIPAIS */
+    --yellow-300:#fde047;
+    --yellow-400:#facc15;
+    --yellow-500:#eab308;
+    --yellow-600:#ca8a04;
+
+    --neutral-400:#a3a3a3;
+    --neutral-500:#737373;
+    --neutral-600:#525252;
+    --neutral-700:#404040;
+    --neutral-800:#262626;
+    --neutral-900:#171717;
+}
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+
+  }
+  50% {
+    background-position: 100% 50%;
+
+  }
+  100% {
+    background-position: 0% 50%;
+
+  }
+}
+
+main > .contentForms{
+    width: 50%;
+    height: 625px;
+    display: inline-flex;
+
+    justify-content: center;
+    align-items: center;
+    
+}
+
+main > .contentForms > .containerForms{
+    border: 1px solid var(--yellow-500);
+
+    height: 400px;
+    width: 400px;
+
+    padding: 75px 75px;
+    border-radius: 5px;
+
+    box-shadow: 0 0 5px 0 var(--yellow-500);
+}
+main > .contentForms > .containerForms > div {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+main > .contentForms > .containerForms > div > h1{
+    font-size: 1.75rem;
+    font-weight: 500;
+
+    line-height: 1.6;
+    
+}
+main > .contentForms > .containerForms > div > p{
+    text-align: center;
+    
+}
+
+main > .contentForms > .containerForms > #form{
+    margin-top: 50px;
+
+    font-size: 1.25;
+}
+
+main > .contentForms > .containerForms > #form > .stylesContainerInput, .stylesContainerInput:focus{
+    padding: 5px 10px;
+
+    border: none;
+    border-bottom: 1px var(--yellow-500) solid;
+
+    box-shadow: var(--yellow-400)  1px ;
+
+    margin-left: 15px;
+
+    line-height: 1.6;
+}
+main > .contentForms > .containerForms > #form > textarea:focus,select:focus, .stylesContainerInput:focus{
+    border: 0 none;
+    outline: 0;
+    
+}
+main > .contentForms > .containerForms > #form > #Enviar{
+
+    background-color: var(--yellow-500);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    
+    margin-left: 15px;
+    width: 95%;
+    padding: 20px;
+
+    margin-top: 50px;
+    transition: 1s;
+}
+main > .contentForms > .containerForms > #form > #Enviar:hover{
+    cursor: pointer;
+    
+    background: linear-gradient(45deg, #fde047, #facc15, #eab308, #ca8a04);
+    color: linear-gradient(45deg, var(--neutral-900),var(--neutral-700),var(--neutral-500),var(--neutral-400));
+    background-size: 400% 400%;
+    animation: gradientAnimation 3s ease infinite;
+    box-shadow: 0 0 5px 0 var(--yellow-500);
+ 
+}
+
+main > .contentForms > .containerForms > #form > #name,#PhoneNumber{
+    width: 40%;
+}
+main > .contentForms > .containerForms > #form > #emailManchester{
+    width: 90%;
+}
+main > .contentForms > .containerForms > #form > #fileExcel{
+    margin-top: 17px;
+    margin-left: 15px;
+    
+}
+
+main > .imageBackground{
+    display: inline-flex;
+
+    background-image: url(../images/predios.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    height: 627px;
+    width: 50%;
+}
+main{
+    display: flex;
+}
+@media screen and (max-width: 1024px) {
+    main > .contentForms {
+        width: 60%;
+
+    }
+    main > .imageBackground {
+        width: 40%;
+    }
+}
+@media screen and (max-width: 768px) {
+    main > .contentForms {
+      width: 100%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    main > .contentForms > .containerForms {
+      width: 80%;
+      height: auto;
+      padding: 50px;
+      margin: 20px 0;
+      text-align: center;
+    }
+  
+    main > .contentForms > .containerForms > div {
+      margin-bottom: 20px;
+    }
+    main > .contentForms > .containerForms  > #form > #emailManchester{
+        
+        width: 87%;
+    }
+    main > .imageBackground {
+      display: none;
+    }
+  }
