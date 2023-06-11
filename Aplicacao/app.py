@@ -26,7 +26,7 @@ def processar_dados(df):
     df['MES'] = df['DATA'].dt.month
     df['PRODUTO'] = df['Produtos:'].str.split().str[1]
     df['CATEGORIA'] = df['PRODUTO'].map(categorias)
-    df['Quantidade De venda:'] = df['QUANTIDADE_VENDIDA'].astype(int)
+    df['Quantidade De venda:'] = df['Quantidade De venda:'].astype(int)
 
     vendas_mes = df.groupby(['MES', 'PRODUTO', 'CATEGORIA'])['Quantidade De venda:'].sum().reset_index()
 
@@ -57,8 +57,8 @@ def processar_dados(df):
 def index():
     return render_template('index.html')
 
-@app.route('/processar', methods=['POST'])
-def processar():
+@app.route('/dados', methods=['POST'])
+def dados():
     if 'fileExcel' not in request.files:
         return 'Nenhum arquivo selecionado'
 
@@ -70,7 +70,11 @@ def processar():
         df = pd.read_excel(file, sheet_name='Base-Dados-Desafio-DEV-01')
         processar_dados(df)
 
-        return render_template('dados.html', data=df.to_html())
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM vendas")
+        dados = cursor.fetchall()
+
+        return render_template('dados.html', dados=dados)
     except Exception as e:
         return f'Erro ao processar o arquivo: {str(e)}'
 

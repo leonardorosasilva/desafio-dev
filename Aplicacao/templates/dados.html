@@ -4,11 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="./images/logoManchester.png" type="image/png">
     <title>Dados</title>
 </head>
 <body>
     <h1>Dados Importados</h1>
-    {{ data|safe }}
+    <table>
+        <tr>
+            <th>Mês</th>
+            <th>Produto</th>
+            <th>Categoria</th>
+            <th>Quantidade</th>
+        </tr>
+        {% for dado in dados %}
+        <tr>
+            <td>{{ dado[0] }}</td>
+            <td>{{ dado[1] }}</td>
+            <td>{{ dado[2] }}</td>
+            <td>{{ dado[3] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>
