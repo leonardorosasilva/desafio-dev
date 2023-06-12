@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 import pandas as pd
 import mysql.connector
 
 app = Flask(__name__)
 
+# Configurações do banco de dados MySQL
 db = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -11,6 +12,7 @@ db = mysql.connector.connect(
     database="mydatabase"
 )
 
+# Função para processar os dados e armazená-los no banco de dados
 def processar_dados(df):
     # Mapear os nomes dos produtos para as categorias correspondentes
     categorias = {
@@ -21,19 +23,17 @@ def processar_dados(df):
         'E': 'JARDINAGEM'
     }
 
-    # Agrupar os dados por mês e produto
+    # Manipular os dados conforme necessário
     df['DATA'] = pd.to_datetime(df['DATA'], dayfirst=True)
     df['MES'] = df['DATA'].dt.month
     df['PRODUTO'] = df['Produtos:'].str.split().str[1]
     df['CATEGORIA'] = df['PRODUTO'].map(categorias)
-    df['Quantidade De venda:'] = df['Quantidade De venda:'].astype(int)
+    df['Quantidade De venda:'] = df['QUANTIDADE_VENDIDA'].astype(int)
 
-    vendas_mes = df.groupby(['MES', 'PRODUTO', 'CATEGORIA'])['Quantidade De venda:'].sum().reset_index()
-
-    # Salvar as informações no banco de dados MySQL
+    # Armazenar os dados no banco de dados MySQL
     cursor = db.cursor()
 
-    for _, row in vendas_mes.iterrows():
+    for _, row in df.iterrows():
         mes = row['MES']
         produto = row['PRODUTO']
         categoria = row['CATEGORIA']
@@ -57,19 +57,16 @@ def processar_dados(df):
 def index():
     return render_template('index.html')
 
-@app.route('/dados', methods=['POST'])
-def dados():
-    if 'fileExcel' not in request.files:
-        return 'Nenhum arquivo selecionado'
-
-    file = request.files['fileExcel']
-    if file.filename == '':
-        return 'Nenhum arquivo selecionado'
-
+@app.route('/processar')
+def processar():
     try:
-        df = pd.read_excel(file, sheet_name='Base-Dados-Desafio-DEV-01')
+        # Ler o arquivo Excel
+        df = pd.read_excel('Base-Dados-Desafio-DEV-01.xlsx', sheet_name='VENDAS')
+
+        # Processar os dados e armazená-los no banco de dados
         processar_dados(df)
 
+        # Recuperar os dados do banco de dados para exibir em dados.html
         cursor = db.cursor()
         cursor.execute("SELECT * FROM vendas")
         dados = cursor.fetchall()
@@ -78,5 +75,3 @@ def dados():
     except Exception as e:
         return f'Erro ao processar o arquivo: {str(e)}'
 
-if __name__ == '__main__':
-    app.run(debug=True)

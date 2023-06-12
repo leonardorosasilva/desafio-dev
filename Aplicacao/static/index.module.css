@@ -98,7 +98,7 @@ main > .contentForms > .containerForms > #form > textarea:focus,select:focus, .s
     outline: 0;
     
 }
-main > .contentForms > .containerForms > #form > #Enviar{
+main > .contentForms > .containerForms > #form > a> #Enviar{
 
     background-color: var(--yellow-500);
     color: white;
@@ -112,7 +112,7 @@ main > .contentForms > .containerForms > #form > #Enviar{
     margin-top: 50px;
     transition: 1s;
 }
-main > .contentForms > .containerForms > #form > #Enviar:hover{
+main > .contentForms > .containerForms > #form >a> #Enviar:hover{
     cursor: pointer;
     
     background: linear-gradient(45deg, #fde047, #facc15, #eab308, #ca8a04);
